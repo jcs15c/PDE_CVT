@@ -26,8 +26,7 @@ Points are generated on the unit hypercube according to a given density function
    ...
 ```
 ![Spherical CVT Example](https://github.com/jcs15c/sphere_cvt/blob/master/output/examples/Spherical_CVT_Example.png "Spherical_CVT_Example")
-```
-   python
+```python
    #Text output
    5D Uniform  
    [[-0.97116734 -0.89501887  0.87471317 -0.9724642  -0.0399111 ]
