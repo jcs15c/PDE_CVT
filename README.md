@@ -25,7 +25,7 @@ Points are generated on the unit hypercube according to a given density function
 
    ...
 ```
-![Spherical CVT Example](https://github.com/jcs15c/sphere_cvt/blob/master/output/examples/Spherical_CVT_Example.png "Spherical_CVT_Example")
+![Monte Carlo Sample Points](https://github.com/jcs15c/PDE_CVT/blob/master/examples/gensample_fig.png "Monte_Carlo_Sample")
 ```python
    #Text output
    5D Uniform  
