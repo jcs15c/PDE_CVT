@@ -1,6 +1,5 @@
 from __future__ import print_function
 import cvt_processing as cvt
-import hammersley as ham
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import Voronoi, voronoi_plot_2d
@@ -22,7 +21,7 @@ def plot_voronois(pts1, pts2, iteration):
 
 n = 100
 for i in range(5):
-    hpts = ham.hammersley_sequence(0, n-1, 2, n-1)*2 + (-1)
+    hpts = cvt.hammersley_pts(n)
     hpts = np.transpose(hpts)
     hjs = cvt.macqueen_js(n)
 
