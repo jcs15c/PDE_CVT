@@ -2,8 +2,8 @@ from __future__ import print_function
 import numpy as np
 import scipy as sp
 
-scorner = -1			#Moves the unit square
-sside = 2				#Scales the unit square
+scorner = 0			#Moves the unit square
+sside = 1				#Scales the unit square
 	
 def uniform(pt):
 	return 1
@@ -61,9 +61,7 @@ def kppsample(n, density=uniform, dim=2, alpha=2):
 	gens = np.zeros([n, dim])
 
 	gens[0] = np.random.rand(dim)	#Generate first point
-	print(gens[0])
-
-
+	
 	for i in range(1,len(gens)):		#Loop over each generator
 		while True:						#Loop until generator is selected
 			test_pt = gensample(1, density, gens.shape[1])[0]	#Potential generator
@@ -184,7 +182,7 @@ def halton_sequence(b, n):
         return seq
 
         
-def latin_pts(n, d):
+def latin_pts(n, d=2):
 	pts = np.zeros([d,n])	
 	inds = np.arange(n)
 	dims = np.arange(d)	
