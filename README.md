@@ -4,13 +4,14 @@ This library contains functions to generate Centroidal Voronoi points in n-dimen
 
 ## Point Generation
 
-Monte Carlo Points are generated randomly on the unit hypercube according to a given density function. The hypercube can be scaled and translated within the processing script.
+Monte Carlo Points are generated randomly on the unit hypercube according to a given density function. 
 
 ```python
    gensample(n, density=uniform, dim=2)
 ```
 
 ```python
+   ## srs_sample_test.py ##
    import cvt_processing as cvt
    
    # 2D Example
@@ -25,7 +26,7 @@ Monte Carlo Points are generated randomly on the unit hypercube according to a g
 
    ...
 ```
-![Monte Carlo Sample Points](https://github.com/jcs15c/PDE_CVT/blob/master/examples/gensample_fig.png "Monte_Carlo_Sample")
+![Monte Carlo Sample Points](https://github.com/jcs15c/PDE_CVT/blob/master/example_images/srs_sample_fig.png "Monte_Carlo_Sample")
 ```
    #Text output
    5D Uniform  
