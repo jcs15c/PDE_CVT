@@ -79,7 +79,7 @@ def kppsample(n, density=uniform, dim=2, alpha=2):
 
 	return gens * sside + scorner
 
-def macqueen_step(gens, js, density=uniform, distance=False):
+def macqueen_step(gens, js, density=uniform, distance_return=False):
 	k = len(gens)
 
 	y = gensample(1, density, gens.shape[1])[0]
@@ -97,7 +97,7 @@ def macqueen_step(gens, js, density=uniform, distance=False):
 	gens[ind] = (js[ind]*gens[ind] + y)/(js[ind] + 1)
 	js[ind] = js[ind] + 1
 
-	if distance:
+	if distance_return:
 		return gens, js, np.linalg.norm(gens[ind] - old_gen)
 
 	return gens, js
@@ -182,10 +182,10 @@ def halton_sequence(b, n):
         return seq
 
         
-def latin_pts(n, d=2):
-	pts = np.zeros([d,n])	
+def latin_pts(n, dim=2):
+	pts = np.zeros([dim,n])	
 	inds = np.arange(n)
-	dims = np.arange(d)	
+	dims = np.arange(dim)	
 
         for j in dims:
                 Upts = np.random.rand(n)
