@@ -71,7 +71,7 @@ Centroidal Voronoi Tesselations represent another way to evenly distribute point
 
 LLoyd's algorithm involves creating a voronoi tesselation from the existing sample points, where each point is assigned a region of all points in space closer to it than any other sample points. The centroid of each region is then taken to be used as sample points in the next iteration. This process converges relatively quickly, but is very computationally expensive in high dimensions. This is because regions and centroids are calculated with thousands of sample points, which becomes very taxing with more dimensions.
 
-MacQueens algorithm also generates a CVT, but does so by generating a single test point in space, then moving only the sample point closest to it. This results in a drasitcally slower convergence rate per iteration, but a dramatically faster run time in higher dimensions.
+MacQueens algorithm also generates a CVT, but does so by generating a single test point in space, then moving only the sample point closest to it. This results in a slower convergence rate per iteration, but a dramatically faster overall run time in higher dimensions.
 
 The two CVT algorithm functions can be run with respect to a particular density function, and can return an energy calculation, which quantifies the efficiency of the resulting CVT.
 
