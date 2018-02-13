@@ -7,7 +7,7 @@ This library contains functions to generate Centroidal Voronoi points in n-dimen
 Monte Carlo Points are generated randomly on the unit hypercube according to a given density function. 
 
 ```python
-   gensample(n, density=uniform, dim=2)
+   gensample(n, dim=2, density=uniform)
 ```
 
 ```python
@@ -16,13 +16,13 @@ Monte Carlo Points are generated randomly on the unit hypercube according to a g
    
    # 2D Example
    uniform_pts  = cvt.srs_pts(100)
-   gauss_pts    = cvt.srs_pts(100, cvt.gauss)
-   sinusoid_pts = cvt.gensample(100, density=cvt.sinusoid)
+   gauss_pts    = cvt.srs_pts(100, 2, cvt.gauss)
+   sinusoid_pts = cvt.gensample(100, dim=2, density=cvt.sinusoid)
 
    # 5D Example
    uniform_pts_5d  = cvt.srs_pts(3, dim=5)
-   gauss_pts_5d    = cvt.srs_pts(3, density=cvt.gauss, dim=5)
-   sinusoid_pts_5d = cvt.srs_pts(3, cvt.sinusoid, 5)
+   gauss_pts_5d    = cvt.srs_pts(3, dim=5, density=cvt.gauss)
+   sinusoid_pts_5d = cvt.srs_pts(3, 5, cvt.sinusoid)
 
    ...
 ```
