@@ -39,7 +39,7 @@ def inverse_transform(pts):
         return np.transpose(npts)*sside + scorner
         
 #Generates n sample points in dim dimensions
-def srs_pts(n, density=uniform, dim=2):
+def srs_pts(n, dim=2, density=uniform):
 	gens = np.zeros([n, dim])
 	
 	for i in range(n):
@@ -66,7 +66,7 @@ def kpp_pts(n, density=uniform, dim=2, alpha=2):
 	
 	for i in range(1,len(gens)):		#Loop over each generator
 		while True:						#Loop until generator is selected
-			test_pt = srs_pts(1, density, gens.shape[1])[0]	#Potential generator
+			test_pt = srs_pts(1, gens.shape[1], density)[0]	#Potential generator
 			test_dist = np.random.rand()*np.sqrt(dim)			#Rejection threshhold
 
 			short_dist = np.inf			#Find shortest distance from testpt
@@ -84,7 +84,7 @@ def kpp_pts(n, density=uniform, dim=2, alpha=2):
 def macqueen_step(gens, js, density=uniform, distance_return=False):
 	k = len(gens)
 
-	y = srs_pts(1, density, gens.shape[1])[0]
+	y = srs_pts(1, gens.shape[1], density)[0]
 
 	short_dist = np.inf
 	ind = -1
@@ -128,7 +128,7 @@ def lloyd_step(gens, sample, density=uniform, energy_return=False):
 
 	for j in range(k):
 		if bin_count[j] == 0:
-			bins[j] = srs_pts(1, density, gens.shape[1])[0]
+			bins[j] = srs_pts(1, gens.shape[1], density)[0]
 			bin_count[j] = 1
 		gens[j] = bins[j] / bin_count[j]
 
@@ -139,7 +139,7 @@ def lloyd_step(gens, sample, density=uniform, energy_return=False):
 			
 def calc_energy(gens, n, density=uniform):
 	energy = 0
-	sample = srs_pts(n, density)
+	sample = srs_pts(n, 2, density)
 	for pt in sample:        #loop over sample points...
 		short_dist = np.inf
 		ind = 0
