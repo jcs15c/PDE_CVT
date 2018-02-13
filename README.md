@@ -124,6 +124,8 @@ Because latinization is a process which can only be computed on a uniform distri
    lhs_pts = cvt.latin_pts(n)
    cvt_pts = cvt.cvt_pts(n)
    lvt_pts = cvt.cvt_lhs_pts(n)
+
+   ...
 ```
 
 ![Final Test Figure](https://github.com/jcs15c/PDE_CVT/blob/master/example_images/final_fig.png "Final_Figure")
