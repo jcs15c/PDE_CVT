@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Generate other arrays
-lloyd_sample = cvt.gensample(1000)
+lloyd_sample = cvt.srs_pts(1000)
 macqueen_js  = cvt.macqueen_js(25)
 
 # Set up initial points for each algorithm
-init_pts = cvt.gensample(25)
+init_pts = cvt.srs_pts(25)
 ll_one_it = np.array(init_pts, copy=True)
 mq_one_it = np.array(init_pts, copy=True)
 
@@ -18,7 +18,7 @@ mq_one_it, macqueen_js = cvt.macqueen_step(mq_one_it, macqueen_js)
 # Do 999 more iterations of Macqueens algorithm
 mq_1000_it = np.array(mq_one_it, copy=True)
 for i in range(999):
-    mq_1000_it, macqueen_js = cvt.macqueen_step(mq_1000_it, macqueen_js)
+g    mq_1000_it, macqueen_js = cvt.macqueen_step(mq_1000_it, macqueen_js)
 
     
 init_pts_t = np.transpose(init_pts)

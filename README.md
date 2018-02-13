@@ -15,14 +15,14 @@ Monte Carlo Points are generated randomly on the unit hypercube according to a g
    import cvt_processing as cvt
    
    # 2D Example
-   uniform_pts  = cvt.gensample(100)
-   gauss_pts    = cvt.gensample(100, cvt.gauss)
+   uniform_pts  = cvt.srs_pts(100)
+   gauss_pts    = cvt.srs_pts(100, cvt.gauss)
    sinusoid_pts = cvt.gensample(100, density=cvt.sinusoid)
 
    # 5D Example
-   uniform_pts_5d  = cvt.gensample(3, dim=5)
-   gauss_pts_5d    = cvt.gensample(3, density=cvt.gauss, dim=5)
-   sinusoid_pts_5d = cvt.gensample(3, cvt.sinusoid, 5)
+   uniform_pts_5d  = cvt.srs_pts(3, dim=5)
+   gauss_pts_5d    = cvt.srs_pts(3, density=cvt.gauss, dim=5)
+   sinusoid_pts_5d = cvt.srs_pts(3, cvt.sinusoid, 5)
 
    ...
 ```
@@ -58,7 +58,7 @@ Lainized Hypercube points are selected such that each point occupies a particula
 ```
 ```python
    ## non_srs_test.py ##
-   kpp_pts    = cvt.kppsample(100)
+   kpp_pts    = cvt.kpp_pts(100)
    latin_pts  = cvt.latin_pts(100)
    halton_pts = cvt.halton_pts(100)
    hammer_pts = cvt.hammersley_pts(100)
@@ -83,11 +83,11 @@ The two CVT algorithm functions can be run with respect to a particular density 
 ```python
    ## cvt_test.py ##
 
-   lloyd_sample = cvt.gensample(1000)
+   lloyd_sample = cvt.srs_pts(1000)
    macqueen_js  = cvt.macqueen_js(25)
 
    # Set up initial points for each algorithm
-   init_pts = cvt.gensample(25)
+   init_pts = cvt.srs_pts(25)
    ll_one_it = np.array(init_pts, copy=True)
    mq_one_it = np.array(init_pts, copy=True)
 
@@ -100,7 +100,30 @@ The two CVT algorithm functions can be run with respect to a particular density 
    for i in range(999):
       mq_1000_it, macqueen_js = cvt.macqueen_step(mq_1000_it, macqueen_js)
 
+   ## The above routine can be performed with 'cvt_pts(n)' ##
    ...
 ```
 
 ![CVT Sample Points](https://github.com/jcs15c/PDE_CVT/blob/master/example_images/cvt_fig.png "CVT_Sample")
+
+Because latinization is a process which can only be computed on a uniform distribution of points, we require some other way to create a non-uniform distribution. This is done with an inverse transformation into a gaussian distribution, which as seen below has a varied effect for each sample point set.
+
+```
+   inverse_transform(pts)  #Converts uniformly sampled points to gaussian distribution.
+```
+
+```python
+   ## final_test.py ##
+   
+   n = 50
+
+   srs_pts = cvt.srs_pts(n)
+   kpp_pts = cvt.kpp_pts(n)
+   hal_pts = cvt.halton_pts(n)
+   ham_pts = cvt.hammersley_pts(n)
+   lhs_pts = cvt.latin_pts(n)
+   cvt_pts = cvt.cvt_pts(n)
+   lvt_pts = cvt.cvt_lhs_pts(n)
+```
+
+![Final Test Figure](https://github.com/jcs15c/PDE_CVT/blob/master/example_images/final_fig.png "Final_Figure")

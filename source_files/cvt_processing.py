@@ -1,9 +1,9 @@
 from __future__ import print_function
 import numpy as np
-import scipy as sp
+from scipy.special import erfinv
 
-scorner = 0			#Moves the unit square
-sside = 1				#Scales the unit square
+scorner = -1			#Moves the unit square
+sside = 2				#Scales the unit square
 	
 def uniform(pt):
 	return 1
@@ -27,17 +27,19 @@ def sinusoid(pt):
 	return (np.exp(-20*exponent) + sin_part)/2
 
 def inverse_transform(pts):
+        pts = (pts - scorner)/sside
+
         pts = np.transpose(pts)
         npts = np.zeros_like(pts)
 
         for i in range(pts.shape[0]):
                 npts[i] = 0.5 + 0.167*np.sqrt(2) * \
-                          sp.special.erfinv(2*pts[i] - 1)
+                          erfinv(2*pts[i] - 1)
 
-        return np.transpose(npts)
+        return np.transpose(npts)*sside + scorner
         
 #Generates n sample points in dim dimensions
-def gensample(n, density=uniform, dim=2):
+def srs_pts(n, density=uniform, dim=2):
 	gens = np.zeros([n, dim])
 	
 	for i in range(n):
@@ -57,14 +59,14 @@ def macqueen_js(n):
 #Generates n sample points in dim dimensions
 #Samples according to distance from each other generator
 #	with alpha as the weight
-def kppsample(n, density=uniform, dim=2, alpha=2):
+def kpp_pts(n, density=uniform, dim=2, alpha=2):
 	gens = np.zeros([n, dim])
 
 	gens[0] = np.random.rand(dim)	#Generate first point
 	
 	for i in range(1,len(gens)):		#Loop over each generator
 		while True:						#Loop until generator is selected
-			test_pt = gensample(1, density, gens.shape[1])[0]	#Potential generator
+			test_pt = srs_pts(1, density, gens.shape[1])[0]	#Potential generator
 			test_dist = np.random.rand()*np.sqrt(dim)			#Rejection threshhold
 
 			short_dist = np.inf			#Find shortest distance from testpt
@@ -77,12 +79,12 @@ def kppsample(n, density=uniform, dim=2, alpha=2):
 				gens[i] = test_pt
 				break
 
-	return gens * sside + scorner
+	return gens
 
 def macqueen_step(gens, js, density=uniform, distance_return=False):
 	k = len(gens)
 
-	y = gensample(1, density, gens.shape[1])[0]
+	y = srs_pts(1, density, gens.shape[1])[0]
 
 	short_dist = np.inf
 	ind = -1
@@ -126,7 +128,7 @@ def lloyd_step(gens, sample, density=uniform, energy_return=False):
 
 	for j in range(k):
 		if bin_count[j] == 0:
-			bins[j] = gensample(1, density, gens.shape[1])[0]
+			bins[j] = srs_pts(1, density, gens.shape[1])[0]
 			bin_count[j] = 1
 		gens[j] = bins[j] / bin_count[j]
 
@@ -137,7 +139,7 @@ def lloyd_step(gens, sample, density=uniform, energy_return=False):
 			
 def calc_energy(gens, n, density=uniform):
 	energy = 0
-	sample = gensample(n, density)
+	sample = srs_pts(n, density)
 	for pt in sample:        #loop over sample points...
 		short_dist = np.inf
 		ind = 0
@@ -190,11 +192,12 @@ def latin_pts(n, dim=2):
         for j in dims:
                 Upts = np.random.rand(n)
                 Pj = np.random.permutation(n)
-                pts[j] = ( Pj + 1 - Upts ) / n
+                pts[j] = ( Pj + 1 - 0.5 ) / n
                 
-        return np.transpose(pts)
+        return np.transpose(pts)*sside + scorner
 
 def latin_shift(pts):
+        pts = (pts - scorner)/sside
         n, d = pts.shape	
 	inds = np.arange(n)
 	dims = np.arange(d)	
@@ -206,7 +209,27 @@ def latin_shift(pts):
                 pts[j] = (inds  + 1 - Upts) / n
                 pts = np.transpose(pts)
 
+        return pts*sside + scorner
+
+def cvt_pts(n, dim=2):
+        pts = srs_pts(n, dim)
+        js = macqueen_js(n)
+        
+        for i in range(100000):
+                pts, js = macqueen_step(pts, js)
+
         return pts
+
+def cvt_lhs_pts(n, dim=2):
+        pts = latin_pts(n, dim)
+        js = macqueen_js(n)
+
+        for i in range(100000):
+                pts, js = macqueen_step(pts, js)
+                if (i+1) % 10000 == 0:
+                        pts = latin_shift(pts)
+
+        return latin_shift(pts)
 
 #returns the ith prime, starting at 2 = i_0
 def primes(i):

@@ -2,7 +2,7 @@ import cvt_processing as cvt
 import matplotlib.pyplot as plt
 import numpy as np
 
-kpp_pts    = cvt.kppsample(100)
+kpp_pts    = cvt.kpp_pts(100)
 latin_pts  = cvt.latin_pts(100)
 halton_pts = cvt.halton_pts(100)
 hammer_pts = cvt.hammersley_pts(100)

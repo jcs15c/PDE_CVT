@@ -2,13 +2,13 @@ import cvt_processing as cvt
 import matplotlib.pyplot as plt
 import numpy as np
 
-uniform_pts  = cvt.gensample(100)
-gauss_pts    = cvt.gensample(100, cvt.gauss)
-sinusoid_pts = cvt.gensample(100, density=cvt.sinusoid)
+uniform_pts  = cvt.srs_pts(100)
+gauss_pts    = cvt.srs_pts(100, cvt.gauss)
+sinusoid_pts = cvt.srs_pts(100, density=cvt.sinusoid)
 
-uniform_pts_5d  = cvt.gensample(3, dim=5)
-gauss_pts_5d    = cvt.gensample(3, density=cvt.gauss, dim=5)
-sinusoid_pts_5d = cvt.gensample(3, cvt.sinusoid, 5)
+uniform_pts_5d  = cvt.srs_pts(3, dim=5)
+gauss_pts_5d    = cvt.srs_pts(3, density=cvt.gauss, dim=5)
+sinusoid_pts_5d = cvt.srs_pts(3, cvt.sinusoid, 5)
 
 uniform_pts_t  = np.transpose(uniform_pts)
 gauss_pts_t    = np.transpose(gauss_pts)
